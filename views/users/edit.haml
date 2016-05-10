@@ -1,0 +1,8 @@
+%form{ :action => "", :method => "post"}
+  %input{:name => "_method", :type => "hidden", :value => "PUT"}
+  %fieldset
+    %ol
+      %li
+        %label{:for => "name"} Email:
+        %input{:type => "text", :name => "email", :class => "text", value: @user.email}
+    %input{:type => "submit", :value => "Send", :class => "button"}
