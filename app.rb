@@ -25,7 +25,7 @@ get '/users/new' do
     haml :'users/new'
 end
 
-post '/users/new' do
+post '/users' do
     email = params[:email]
     User.create(email: email)
     redirect :users
@@ -36,7 +36,7 @@ get '/users/:id/edit' do
   haml :'users/edit'
 end
 
-put '/users/:id/edit' do
+put '/users/:id' do
   @user = User.find(params[:id])
   @user.update!(email: params[:email])
   redirect :users
