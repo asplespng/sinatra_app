@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %title Sinatra App
+    -# %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/styles.css'}
+  %body
+    %table
+      %tr
+        %th Users
+      -@users.each do |user|
+        %tr
+          %td
+            %a{href: "/users/#{user.id}/edit"}= user.email
+
+
+    %a{:href => '/users/new'} New User
