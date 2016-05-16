@@ -41,3 +41,9 @@ put '/users/:id' do
   @user.update!(email: params[:email])
   redirect :users
 end
+
+delete '/users/:id' do
+  @user = User.find(params[:id])
+  @user.destroy!
+  redirect :users
+end

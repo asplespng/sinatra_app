@@ -7,10 +7,16 @@
     %table
       %tr
         %th Users
+        %th Actions
       -@users.each do |user|
         %tr
           %td
             %a{href: "/users/#{user.id}/edit"}= user.email
+          %td
+            %a{href: "/users/#{user.id}/edit"} Edit
+            %form{ :action => "/users/#{user.id}", :method => "post"}
+              %input{:name => "_method", :type => "hidden", :value => "DELETE"}
+              %input{type: "submit", value:"Delete"}
 
 
     %a{:href => '/users/new'} New User
