@@ -1,20 +1,37 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
+require 'sprockets'
+require 'uglifier'
+require 'sass'
+require 'coffee-script'
+require './models'
 
 set :database, "sqlite3:sinatra_app_dev.sqlite3"
+# initialize new sprockets environment
+set :sprockets, Sprockets::Environment.new
+#
+# # append assets paths
+settings.sprockets.append_path "assets/stylesheets"
+settings.sprockets.append_path "assets/javascripts"
+settings.sprockets.append_path "assets/fonts"
 
-require './models'
+configure :production do
+  # compress assets
+  settings.sprockets.js_compressor  = :uglify
+  settings.sprockets.css_compressor = :scss
+end
+
+# get assets
+get "/assets/*" do
+  env["PATH_INFO"].sub!("/assets", "")
+  settings.sprockets.call(env)
+end
 
 get '/hello/:name' do
   name = params[:name]
   "Hello #{name}"
 end
-
-# get '/:name' do
-#   name = params[:name]
-#   "Hello #{name}"
-# end
 
 get '/users' do
   @users = User.all
