@@ -42,6 +42,12 @@ put '/users/:id' do
   redirect :users
 end
 
+get '/users/:id/delete' do
+  @user = User.find(params[:id])
+  haml :'/users/delete'
+end
+
+
 delete '/users/:id' do
   @user = User.find(params[:id])
   @user.destroy!

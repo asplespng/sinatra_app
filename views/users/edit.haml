@@ -1,8 +1,8 @@
-%form{ :action => "/users/#{@user.id}", :method => "post"}
-  %input{:name => "_method", :type => "hidden", :value => "PUT"}
+%form{action: "/users/#{@user.id}", method: "post"}
+  %input{name: "_method", type: "hidden", value: "PUT"}
   %fieldset
     %ol
       %li
-        %label{:for => "name"} Email:
-        %input{:type => "text", :name => "email", :class => "text", value: @user.email}
-    %input{:type => "submit", :value => "Send", :class => "button"}
+        %label{for: "name"} Email:
+        %input{type: "text", name: "email", class: "text", value: @user.email}
+    %input{type: "submit", value: "Send", class: "button"}
