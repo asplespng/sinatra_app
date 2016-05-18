@@ -17,7 +17,7 @@
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li.active
-              %a{:href => "#"} Home
+              %a{:href => "/users"} Users
             %li
               %a{:href => "#about"} About
             %li
@@ -26,6 +26,10 @@
     .container
       .starter-template
         %p.lead
+          -flash.each do |key, message|
+            %div{class: "alert alert-#{key.to_s} alert-dismissable", role: "alert"}
+              %a.close{"aria-label" => "close", "data-dismiss" => "alert", :href => "#"} &times;
+              = message
           =yield
           %br All you get is this text and a mostly barebones HTML document.
 / /.container

@@ -6,6 +6,9 @@ require 'uglifier'
 require 'sass'
 require 'coffee-script'
 require './models'
+require 'sinatra/flash'
+
+enable :sessions
 
 set :database, "sqlite3:sinatra_app_dev.sqlite3"
 # initialize new sprockets environment
@@ -45,6 +48,7 @@ end
 post '/users' do
     email = params[:email]
     User.create(email: email)
+    flash[:info] = "User sucessfully created"
     redirect :users
 end
 
