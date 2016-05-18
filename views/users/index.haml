@@ -1,15 +1,19 @@
-%table.table.table-striped.table-bordered
-  %tr
-    %th Users
-    %th Actions
-  -@users.each do |user|
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Users
+
+  %table.table
     %tr
-      %td
-        %a{href: "/users/#{user.id}/edit"}= user.email
-      %td
-        .btn-group
-          %a.btn.btn-primary{href: "/users/#{user.id}/edit"} Edit
-          %a.btn.btn-danger{href: "/users/#{user.id}/delete"} Delete
+      %th Email
+      %th Actions
+    -@users.each do |user|
+      %tr
+        %td
+          %a{href: "/users/#{user.id}/edit"}= user.email
+        %td
+          .btn-group
+            %a.btn.btn-primary{href: "/users/#{user.id}/edit"} Edit
+            %a.btn.btn-danger{href: "/users/#{user.id}/delete"} Delete
 
 
 %a.btn.btn-primary{:href => '/users/new'} New User
