@@ -1,0 +1,5 @@
+%h1 Delete User
+%p Are you sure you want to delete User: #{@user.email}
+%form{action: "/users/#{@user.id}", method: "post"}
+  %input{name: "_method", type: "hidden", value: "DELETE"}
+  %input{type: "submit", value:"Delete"}
