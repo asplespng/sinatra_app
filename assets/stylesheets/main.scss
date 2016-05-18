@@ -1,35 +1,6 @@
-#wrapper{
-    width:66%;
-    margin:auto;
+body {
+  padding-top: 30px;
 }
-
-#header{
-    background-color:#cccccc;
-}
-
-#header>h1{
-    font-size:200%;
-}
-
-#content{
-    margin:12px 0;
-    float:left;
-    width: 66%
-}
-
-#side_bar{
-    margin:12px 0;
-    width :30%;
-    float:right;
-    clear:none;
-    background-color:#ddd;
-}
-
-#footer{
-    clear:both;
-    background-color:#ade;
-    font-size:75%;
-    font-family:sans-serif;
-    color:#333;
-    border-top:solid 1px #69a;
+.starter-template {
+  padding: 40px 15px;
 }
