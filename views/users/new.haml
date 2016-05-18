@@ -1,7 +1,5 @@
 %form{ action: "/users", method: "post"}
-  %fieldset
-    %ol
-      %li
-        %label{for: "name"} Email:
-        %input{type: "text", name: "email", class: "text"}
-    %input{type: "submit", value: "Send", class: "button"}
+  %fieldset.form-group
+    %label{for: "name"} Email:
+    %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email"}
+  %input{type: "submit", value: "Send", class: "btn btn-primary"}
