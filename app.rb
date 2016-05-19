@@ -60,6 +60,7 @@ end
 put '/users/:id' do
   @user = User.find(params[:id])
   @user.update!(email: params[:email])
+  flash[:info] = "User sucessfully updated"
   redirect :users
 end
 
@@ -72,5 +73,6 @@ end
 delete '/users/:id' do
   @user = User.find(params[:id])
   @user.destroy!
+  flash[:info] = "User sucessfully deleted"
   redirect :users
 end
