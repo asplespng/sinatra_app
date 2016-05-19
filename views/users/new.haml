@@ -1,5 +1,9 @@
-%form{ action: "/users", method: "post"}
-  %fieldset.form-group
-    %label{for: "name"} Email:
-    %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email"}
-  %input{type: "submit", value: "Send", class: "btn btn-primary"}
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Delete User
+  .panel-body
+    %form{ action: "/users", method: "post"}
+      %fieldset.form-group
+        %label{for: "email"} Email:
+        %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email"}
+      %input{type: "submit", value: "Send", class: "btn btn-primary"}
