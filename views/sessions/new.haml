@@ -1,8 +1,9 @@
-%form{ :action => "/users", :method => "post"}
+%form{ action: '/sessions', :method => "post"}
   %fieldset
     %ol
       %li
         %label{:for => "name"} Email:
         %input{:type => "text", :name => "email", :class => "text"}
+        %label{:for => "password"} Password:
         %input{:type => "password", :name => "password", :class => "password"}
-    %input{:type => "submit", :value => "Send", :class => "button"}
+    %input{:type => "submit", :value => "Sign in", :class => "button"}
