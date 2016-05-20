@@ -1,16 +1,19 @@
-!!!
-%html
-  %head
-    %title Sinatra App
-    -# %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/styles.css'}
-  %body
-    %table
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Users
+
+  %table.table
+    %tr
+      %th Email
+      %th Actions
+    -@users.each do |user|
       %tr
-        %th Users
-      -@users.each do |user|
-        %tr
-          %td
-            %a{href: "/users/#{user.id}/edit"}= user.email
+        %td
+          %a{href: "/users/#{user.id}/edit"}= user.email
+        %td
+          .btn-group
+            %a.btn.btn-primary{href: "/users/#{user.id}/edit"} Edit
+            %a.btn.btn-danger{href: "/users/#{user.id}/delete"} Delete
 
 
-    %a{:href => '/users/new'} New User
+%a.btn.btn-primary{:href => '/users/new'} New User
