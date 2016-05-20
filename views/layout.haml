@@ -20,8 +20,21 @@
               %a{:href => "/users"} Users
             %li
               %a{:href => "#about"} About
-            %li
-              %a{:href => "#contact"} Contact
+            -if current_user
+              %li
+                %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                  = current_user.email
+                  %span.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => "/users/#{current_user.id}/edit"} Edit Profile
+                  %li
+                    %a{:href => "/sessions/sign_out"} Sign Out
+
+            -else current_user
+              %li
+                %a{:href => "/sessions/new"} Sign In
+
         / /.nav-collapse
     .container
       .starter-template

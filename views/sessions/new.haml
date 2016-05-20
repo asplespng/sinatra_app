@@ -1,9 +1,11 @@
-%form{ action: '/sessions', :method => "post"}
-  %fieldset
-    %ol
-      %li
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Sign In
+  .panel-body
+    %form{ action: '/sessions', :method => "post"}
+      %fieldset.form-group
         %label{:for => "name"} Email:
-        %input{:type => "text", :name => "email", :class => "text"}
+        %input{:type => "text", :name => "email", :class => "form-control"}
         %label{:for => "password"} Password:
-        %input{:type => "password", :name => "password", :class => "password"}
-    %input{:type => "submit", :value => "Sign in", :class => "button"}
+        %input{:type => "password", :name => "password", :class => "form-control password"}
+      %input{:type => "submit", :value => "Sign in", :class => "btn btn-primary"}

@@ -7,6 +7,21 @@ require 'sass'
 require 'coffee-script'
 require './models'
 require 'sinatra/flash'
+require_relative 'lib/authentication'
+
+helpers Authentication
+helpers do
+  def redirect_to_original_request
+    user_id = session[:user_id]
+    flash[:info] = "Welcome back #{User.find(user_id).email}."
+    original_request = session[:original_request]
+    session[:original_request] = nil
+    redirect original_request
+  end
+  def current_user
+    session[:user_id].present? ? User.find(session[:user_id]) : nil
+  end
+end
 
 enable :sessions
 
@@ -81,14 +96,22 @@ end
 post '/sessions' do
   user = User.find_by(email: params[:email])
   if user && user.authenticate(params[:password])
-    redirect '/sessions/success'
+    session[:user_id] = user.id
+    redirect_to_original_request
   else
+    flash[:danger] = "Email or password incorrect."
     redirect '/sessions/new'
   end
 end
 
 get '/sessions/success' do
+  authenticate!
   haml :'/sessions/success'
+end
+
+get '/sessions/sign_out' do
+  session.clear
+  redirect :'/sessions/new'
 end
 
 get '/users/:id/delete' do
