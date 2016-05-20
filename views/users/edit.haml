@@ -1,8 +1,10 @@
-%form{ :action => "/users/#{@user.id}", :method => "post"}
-  %input{:name => "_method", :type => "hidden", :value => "PUT"}
-  %fieldset
-    %ol
-      %li
-        %label{:for => "name"} Email:
-        %input{:type => "text", :name => "email", :class => "text", value: @user.email}
-    %input{:type => "submit", :value => "Send", :class => "button"}
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Edit User
+  .panel-body
+    %form{action: "/users/#{@user.id}", method: "post"}
+      %input{name: "_method", type: "hidden", value: "PUT"}
+      %fieldset.form-group
+        %label{for: "email"} Email:
+        %input{type: "email", name: "email", class: "form-control", value: @user.email}
+      %input{type: "submit", value: "Send", class: "btn btn-primary"}

@@ -7,5 +7,8 @@ gem 'sqlite3'
 gem 'rake'
 gem 'haml'
 gem 'bcrypt'
-
-
+gem 'sprockets'
+gem 'uglifier'
+gem 'sass'
+gem 'coffee-script'
+gem 'sinatra-flash'

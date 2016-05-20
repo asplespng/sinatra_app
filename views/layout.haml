@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title My Sinatra Website
+    %link(rel="stylesheet" href="/assets/app.css")
+    %script(src="/assets/app.js")
+  %body
+    %nav.navbar.navbar-inverse.navbar-fixed-top
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "#"} Project name
+        #navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a{:href => "/users"} Users
+            %li
+              %a{:href => "#about"} About
+            %li
+              %a{:href => "#contact"} Contact
+        / /.nav-collapse
+    .container
+      .starter-template
+        %p.lead
+          -flash.each do |key, message|
+            %div{class: "alert alert-#{key.to_s} alert-dismissable", role: "alert"}
+              %a.close{"aria-label" => "close", "data-dismiss" => "alert", :href => "#"} &times;
+              = message
+          =yield
+          %br All you get is this text and a mostly barebones HTML document.
+/ /.container
