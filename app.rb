@@ -19,7 +19,7 @@ helpers do
     redirect original_request
   end
   def current_user
-    session[:user_id].present? ? User.find(session[:user_id]) : nil
+    @current_user ||= session[:user_id].present? ? User.find(session[:user_id]) : nil
   end
 end
 
@@ -46,9 +46,8 @@ get "/assets/*" do
   settings.sprockets.call(env)
 end
 
-get '/hello/:name' do
-  name = params[:name]
-  "Hello #{name}"
+get '/' do
+  "Welcome"
 end
 
 enable :sessions
