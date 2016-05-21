@@ -8,3 +8,5 @@
 /doc/api
 /Gemfile.lock
 .idea/
+
+*.sqlite3
