@@ -1,10 +1,11 @@
 .panel.panel-default
   .panel-heading
-    %h3.panel-title Delete User
+    %h3.panel-title New User
   .panel-body
     %form{ action: "/users", method: "post"}
       %fieldset.form-group
         %label{for: "email"} Email:
         %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email"}
+        %label{for: "password"} Password:
         %input{:type => "password", :name => "password", :class => "form-control"}
-      %input{type: "submit", value: "Send", class: "btn btn-primary"}
+      %input{type: "submit", value: "Create", class: "btn btn-primary"}
