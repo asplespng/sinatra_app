@@ -67,12 +67,12 @@ get '/users/new' do
 end
 
 post '/users' do
-    user = User.new(email: params['email'], password: params['password'])
-    if user.save
+    @user = User.new(email: params['email'].presence, password: params['password'].presence)
+    if @user.save
       flash[:info] = "User sucessfully created"
       redirect '/users'
     else
-      redirect '/users/new'
+      haml :'users/new'
     end
 end
 
