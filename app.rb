@@ -93,11 +93,9 @@ get '/users/:id/edit' do |id|
   haml :'users/edit'
 end
 
-get '/users/confirm' do
-  @user = User.find_by_email params[:email]
-  if @user.confirm_token == params[:token]
-    @user.update(confirmed: true)
-  end
+get '/users/confirm/:token' do
+  @user = User.find_by_confirm_token params[:token]
+  @user.update(confirmed: true) if @user
 end
 
 put '/users/:id' do
