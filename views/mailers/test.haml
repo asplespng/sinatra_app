@@ -6,4 +6,4 @@
   %body
     %h1 Test
     %p Test content
-    %a{href: "http://localhost:4567/users/confirm?email=#{@user.email}&token=#{@user.confirm_token}"} Confirm
+    %a{href: "http://localhost:4567/users/confirm/#{@user.confirm_token}"} Confirm
