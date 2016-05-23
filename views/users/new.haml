@@ -3,15 +3,14 @@
     %h3.panel-title New User
   .panel-body
     %form{ action: "/users", method: "post"}
-      -flash[:danger] = "User could not be created, please review the form" if @user && @user.errors.any?
-      %div{class: "form-group #{@user && @user.errors[:email].any? && 'has-error'}"}
+      %div{class: "form-group #{@user.errors[:email].any? && 'has-error'}"}
         %label.control-label{for: "email"} Email:
-        %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email"}
+        %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email", value: @user.email}
         %span.help-block
-          = @user.errors[:email].join(',') if @user && @user.errors.any?
-      %div{class: "form-group #{@user && @user.errors[:password].any? && 'has-error'}"}
+          = @user.errors[:email].join(',') if @user.errors.any?
+      %div{class: "form-group #{@user.errors[:password].any? && 'has-error'}"}
         %label.control-label{for: "password"} Password:
         %input{:type => "password", :name => "password", :class => "form-control  "}
         %span.help-block
-          = @user.errors[:password].join(',') if @user && @user.errors.any?
+          = @user.errors[:password].join(', ') if @user.errors.any?
       %input{type: "submit", value: "Create", class: "btn btn-primary"}
