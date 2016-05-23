@@ -8,6 +8,7 @@ require 'coffee-script'
 require './models'
 require 'sinatra/flash'
 require_relative 'lib/authentication'
+require 'pony'
 
 helpers Authentication
 helpers do
@@ -26,6 +27,8 @@ end
 enable :sessions
 
 set :database, "sqlite3:sinatra_app_dev.sqlite3"
+set :pony_defaults, {via: :smtp, via_options: { address: "localhost", port: 1025 }}
+
 # initialize new sprockets environment
 set :sprockets, Sprockets::Environment.new
 #
@@ -63,6 +66,7 @@ get '/users' do
 end
 
 get '/users/new' do
+    @user = User.new
     haml :'users/new'
 end
 
@@ -70,6 +74,14 @@ post '/users' do
     @user = User.new(email: params['email'].presence, password: params['password'].presence)
     if @user.save
       flash[:info] = "User sucessfully created"
+      mail_options = {
+          to: @user.email,
+          from: "a@example.com",
+          subject: "Please confirm your registration",
+          body: "successfully registered",
+          html_body: (haml :'mailers/test', layout: false)
+      }
+      Pony.mail(mail_options.merge settings.pony_defaults)
       redirect '/users'
     else
       haml :'users/new'
@@ -79,6 +91,13 @@ end
 get '/users/:id/edit' do |id|
   @user = User.find(id)
   haml :'users/edit'
+end
+
+get '/users/confirm' do
+  @user = User.find_by_email params[:email]
+  if @user.confirm_token == params[:token]
+    @user.update(confirmed: true)
+  end
 end
 
 put '/users/:id' do
@@ -95,8 +114,13 @@ end
 post '/sessions' do
   user = User.find_by(email: params[:email])
   if user && user.authenticate(params[:password])
-    session[:user_id] = user.id
-    redirect_to_original_request
+    if user.confirmed?
+      session[:user_id] = user.id
+      redirect_to_original_request
+    else
+      flash[:danger] = "Account not confirmed"
+      redirect '/sessions/new'
+    end
   else
     flash[:danger] = "Email or password incorrect."
     redirect '/sessions/new'
