@@ -7,23 +7,18 @@ require 'sass'
 require 'coffee-script'
 require './models'
 require 'sinatra/flash'
-require_relative 'lib/authentication'
+# require_relative 'lib/authentication'
+require_relative 'lib/sinatra/authentication'
 require 'pony'
 require_relative 'config/environments'
 
-helpers Authentication
 helpers do
-  def redirect_to_original_request
-    user_id = session[:user_id]
-    flash[:info] = "Welcome back #{User.find(user_id).email}."
-    original_request = session[:original_request]
-    session[:original_request] = nil
-    redirect original_request
-  end
+  # :redirect_to_original_request
   def current_user
     @current_user ||= session[:user_id].present? ? User.find(session[:user_id]) : nil
   end
 end
+
 
 enable :sessions
 
