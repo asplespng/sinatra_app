@@ -9,6 +9,7 @@ require './models'
 require 'sinatra/flash'
 require_relative 'lib/authentication'
 require 'pony'
+require_relative 'config/environments'
 
 helpers Authentication
 helpers do
@@ -26,8 +27,7 @@ end
 
 enable :sessions
 
-set :database, "sqlite3:sinatra_app_dev.sqlite3"
-set :pony_defaults, {via: :smtp, via_options: { address: "localhost", port: 1025 }}
+# set :database, "sqlite3:sinatra_app_dev.sqlite3"
 
 # initialize new sprockets environment
 set :sprockets, Sprockets::Environment.new
@@ -37,10 +37,9 @@ settings.sprockets.append_path "assets/stylesheets"
 settings.sprockets.append_path "assets/javascripts"
 settings.sprockets.append_path "assets/fonts"
 
-configure :production do
-  # compress assets
-  settings.sprockets.js_compressor  = :uglify
-  settings.sprockets.css_compressor = :scss
+# see http://ruslanledesma.com/2016/04/23/release-connections-thin-and-active-record.html
+after do
+  ActiveRecord::Base.clear_active_connections!
 end
 
 # get assets
@@ -50,7 +49,7 @@ get "/assets/*" do
 end
 
 get '/' do
-  "Welcome"
+  haml :'index'
 end
 
 enable :sessions
@@ -95,7 +94,11 @@ end
 
 get '/users/confirm/:token' do
   @user = User.find_by_confirm_token params[:token]
-  @user.update(confirmed: true) if @user
+  if @user
+    @user.update(confirmed: true)
+    flash[:info] = "Your account has been confirmed"
+    redirect "/sessions/new?email=#{@user.email}"
+  end
 end
 
 put '/users/:id' do
@@ -106,6 +109,7 @@ put '/users/:id' do
 end
 
 get '/sessions/new' do
+  @email = params[:email]
   haml :'/sessions/new'
 end
 
