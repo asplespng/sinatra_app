@@ -9,7 +9,7 @@ configure :development do
       database: db.path[1..-1],
       encoding: 'utf8'
   )
-  set :pony_defaults, {via: :smtp, via_options: { address: "localhost", port: 1025 }}
+  set :pony_defaults, {from: "admin@example.com", via: :smtp, via_options: { address: "localhost", port: 1025 }}
 end
 configure :production do
   db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/sinatra_app_production')

@@ -71,7 +71,7 @@ post '/users' do
           body: "successfully registered",
           html_body: (haml :'mailers/confirm_registration', layout: false)
       }
-      Pony.mail(mail_options.merge settings.pony_defaults)
+      Pony.mail(settings.pony_defaults.merge mail_options)
       redirect '/users'
     else
       haml :'users/new'
