@@ -7,16 +7,12 @@ require 'sass'
 require 'coffee-script'
 require './models'
 require 'sinatra/flash'
-# require_relative 'lib/authentication'
 require_relative 'lib/sinatra/authentication'
 require 'pony'
 require_relative 'config/environments'
 
 helpers do
-  # :redirect_to_original_request
-  def current_user
-    @current_user ||= session[:user_id].present? ? User.find(session[:user_id]) : nil
-  end
+
 end
 
 
