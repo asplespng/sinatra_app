@@ -69,7 +69,7 @@ post '/users' do
           from: "a@example.com",
           subject: "Please confirm your registration",
           body: "successfully registered",
-          html_body: (haml :'mailers/test', layout: false)
+          html_body: (haml :'mailers/confirm_registration', layout: false)
       }
       Pony.mail(mail_options.merge settings.pony_defaults)
       redirect '/users'
