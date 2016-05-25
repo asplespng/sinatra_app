@@ -15,7 +15,7 @@ module Sinatra
       session[:original_request] = nil
       redirect original_request
     end
-    
+
     def current_user
       @current_user ||= session[:user_id].present? ? User.find(session[:user_id]) : nil
     end
