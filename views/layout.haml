@@ -23,7 +23,7 @@
             -if current_user
               %li
                 %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-                  = current_user.email
+                  = current_user.name.present? ? current_user.name : current_user.email
                   %span.caret
                 %ul.dropdown-menu
                   %li
