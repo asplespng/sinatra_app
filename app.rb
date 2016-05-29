@@ -10,6 +10,8 @@ require 'sinatra/flash'
 require_relative 'lib/sinatra/authentication'
 require 'pony'
 require_relative 'config/environments'
+require 'omniauth'
+require 'omniauth-twitter'
 
 helpers do
 
@@ -17,6 +19,10 @@ end
 
 
 enable :sessions
+
+use OmniAuth::Builder do
+  provider :twitter, 'OPOhca7GVM5M5xAFu3jjWUqLk', 'uTJwOMwX5PPeyHmngCrgz2Zvnrr4aGHVpmdqaD1Jw251AGnCbY'
+end
 
 # set :database, "sqlite3:sinatra_app_dev.sqlite3"
 
@@ -39,7 +45,24 @@ get "/assets/*" do
   settings.sprockets.call(env)
 end
 
+get '/auth/twitter/callback' do
+  auth = env['omniauth.auth']
+  user = User.where( uid: auth['uid'], auth_provider: auth['provider']).first_or_initialize
+  user.attributes = {uid: auth['uid'], name: auth['info']['name'], auth_provider: auth['provider']}
+  user.save!
+  session[:user_id] = user.id
+  redirect_to_original_request
+end
+
+get '/auth/failure' do
+  flash_message = "Authentication failed."
+  flash_message += " Message was: #{params[:message]}" if params[:message].present?
+  flash[:danger] = flash_message
+  redirect '/sessions/new'
+end
+
 get '/' do
+  authenticate!
   haml :'index'
 end
 
@@ -51,6 +74,7 @@ helpers do
 
 end
 get '/users' do
+  authenticate!
   @users = User.all
   haml :'users/index'
 end
@@ -101,6 +125,7 @@ end
 
 get '/sessions/new' do
   @email = params[:email]
+  flash[:danger] = "You are already signed in" if current_user
   haml :'/sessions/new'
 end
 

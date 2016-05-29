@@ -1,11 +1,13 @@
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title Sign In
-  .panel-body
-    %form{ action: '/sessions', :method => "post"}
-      %fieldset.form-group
-        %label{:for => "name"} Email:
-        %input{:type => "text", :name => "email", :class => "form-control", value: @email}
-        %label{:for => "password"} Password:
-        %input{:type => "password", :name => "password", :class => "form-control password"}
-      %input{:type => "submit", :value => "Sign in", :class => "btn btn-primary"}
+-unless current_user
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Sign In
+    .panel-body
+      %form{ action: '/sessions', :method => "post"}
+        %fieldset.form-group
+          %label{:for => "name"} Email:
+          %input{:type => "text", :name => "email", :class => "form-control", value: @email}
+          %label{:for => "password"} Password:
+          %input{:type => "password", :name => "password", :class => "form-control password"}
+        %input{:type => "submit", :value => "Sign in", :class => "btn btn-primary"}
+        %a.btn.btn-primary{href: "/auth/twitter"} Twitter
