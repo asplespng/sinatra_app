@@ -3,12 +3,17 @@
     %h3.panel-title New User
   .panel-body
     %form{ action: "/users", method: "post"}
-      %div{class: "form-group #{@user.errors[:email].any? && 'has-error'}"}
-        %label.control-label{for: "email"} Email:
-        %input{type: "email", name: "email", class: "form-control", placeholder:"Enter email", value: @user.email}
+      %div{class: "form-group #{@user.errors[:name].any? && "has-error"}"}
+        %label.control-label{for: "name"} Name:
+        %input{type: "text", name: "name", class: "form-control", placeholder:"Enter your name", value: @user.email}
         %span.help-block
-          = @user.errors[:email].join(',') if @user.errors.any?
-      %div{class: "form-group #{@user.errors[:password].any? && 'has-error'}"}
+          = @user.errors[:name].join(', ') if @user.errors.any?
+      %div{class: "form-group #{@user.errors[:email].any? && "has-error"}"}
+        %label.control-label{for: "email"} Email:
+        %input{type: "email", name: "email", class: "form-control", placeholder:"Enter your email", value: @user.email}
+        %span.help-block
+          = @user.errors[:email].join(', ') if @user.errors.any?
+      %div{class: "form-group #{@user.errors[:password].any? && "has-error"}"}
         %label.control-label{for: "password"} Password:
         %input{:type => "password", :name => "password", :class => "form-control  "}
         %span.help-block
