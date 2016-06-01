@@ -4,12 +4,14 @@
 
   %table.table
     %tr
+      %th Name
       %th Email
       %th Actions
     -@users.each do |user|
       %tr
         %td
-          %a{href: "/users/#{user.id}/edit"}= user.email
+          %a{href: "/users/#{user.id}/edit"}= user.name
+        %td= user.email
         %td
           .btn-group
             %a.btn.btn-primary{href: "/users/#{user.id}/edit"} Edit

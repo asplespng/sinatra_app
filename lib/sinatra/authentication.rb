@@ -10,14 +10,14 @@ module Sinatra
 
     def redirect_to_original_request
       user_id = session[:user_id]
-      flash[:info] = "Welcome back #{User.find(user_id).email}."
+      flash[:info] = "Welcome #{current_user.name}."
       original_request = session[:original_request]
       session[:original_request] = nil
       redirect original_request
     end
 
     def current_user
-      @current_user ||= session[:user_id].present? ? User.find(session[:user_id]) : nil
+      @current_user ||= session[:user_id].present? ? User.find_by(id: session[:user_id]) : nil
     end
   end
 
