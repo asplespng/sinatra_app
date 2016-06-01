@@ -12,6 +12,8 @@ require 'pony'
 require_relative 'config/environments'
 require 'omniauth'
 require 'omniauth-twitter'
+require 'omniauth-pinterest'
+require 'omniauth-facebook'
 
 helpers do
 
@@ -22,6 +24,8 @@ enable :sessions
 
 use OmniAuth::Builder do
   provider :twitter, 'OPOhca7GVM5M5xAFu3jjWUqLk', 'uTJwOMwX5PPeyHmngCrgz2Zvnrr4aGHVpmdqaD1Jw251AGnCbY'
+  provider :pinterest, '4837783386420424106', '5845e4c906f9849966f4197597c32b66402929aed8e5ea4abd2af2e657e15897'
+  provider :facebook, '1775932759305227', 'a32d4c896dfebd4fa452a76a4924e26f'
 end
 
 # set :database, "sqlite3:sinatra_app_dev.sqlite3"
@@ -45,10 +49,24 @@ get "/assets/*" do
   settings.sprockets.call(env)
 end
 
-get '/auth/twitter/callback' do
+get "/fonts/*" do
+  env["PATH_INFO"].sub!("/fonts", "")
+  settings.sprockets.call(env)
+end
+
+get '/auth/*/callback' do
   auth = env['omniauth.auth']
   user = User.where( uid: auth['uid'], auth_provider: auth['provider']).first_or_initialize
-  user.attributes = {uid: auth['uid'], name: auth['info']['name'], auth_provider: auth['provider']}
+  name = nil
+  if auth['info']['name'].present?
+    name = auth['info']['name']
+  else
+    if auth['info']['first_name'].present?
+      name = auth['info']['first_name']
+      name += " #{auth['info']['last_name']}" if auth['info']['last_name'].present?
+    end
+  end
+  user.attributes = {uid: auth['uid'], name: name, auth_provider: auth['provider']}
   user.save!
   session[:user_id] = user.id
   redirect_to_original_request
