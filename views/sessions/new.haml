@@ -9,5 +9,18 @@
           %input{:type => "text", :name => "email", :class => "form-control", value: @email}
           %label{:for => "password"} Password:
           %input{:type => "password", :name => "password", :class => "form-control password"}
-        %input{:type => "submit", :value => "Sign in", :class => "btn btn-primary"}
-        %a.btn.btn-primary{href: "/auth/twitter"} Twitter
+        .row
+          .col-md-3
+            %input.btn.btn-block.btn-primary{:type => "submit", :value => "Sign in"}
+          .col-md-3
+            %a.btn.btn-block.btn-social.btn-twitter{href: "/auth/twitter"}
+              %span.fa.fa-twitter
+              Sign in with Twitter
+          .col-md-3
+            %a.btn.btn-block.btn-social.btn-facebook{href: "/auth/facebook"}
+              %span.fa.fa-facebook
+              Sign in with Facebook
+          .col-md-3
+            %a.btn.btn-block.btn-social.btn-pinterest{href: "/auth/pinterest"}
+              %span.fa.fa-pinterest
+              Sign in with Pinterest
