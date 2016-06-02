@@ -23,9 +23,10 @@ end
 enable :sessions
 
 use OmniAuth::Builder do
-  provider :twitter, 'OPOhca7GVM5M5xAFu3jjWUqLk', 'uTJwOMwX5PPeyHmngCrgz2Zvnrr4aGHVpmdqaD1Jw251AGnCbY'
-  provider :pinterest, '4837783386420424106', '5845e4c906f9849966f4197597c32b66402929aed8e5ea4abd2af2e657e15897'
-  provider :facebook, '1775932759305227', 'a32d4c896dfebd4fa452a76a4924e26f'
+  provider :twitter, ENV['TWITTER_OMNIAUTH'], ENV['TWITTER_OMNIAUTH_SECRET']
+  provider :pinterest, ENV['PINTEREST_OMNIAUTH'], ENV['PINTEREST_OMNIAUTH_SECRET']
+  provider :facebook, ENV['FACEBOOK_OMNIAUTH'], ENV['FACEBOOK_OMNIAUTH_SECRET']
+  # provider :facebook, ENV['GOOGLE_OMNIAUTH'], ENV['GOOGLE_OMNIAUTH_SECRET']
 end
 
 # set :database, "sqlite3:sinatra_app_dev.sqlite3"
