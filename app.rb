@@ -14,6 +14,7 @@ require 'omniauth'
 require 'omniauth-twitter'
 require 'omniauth-pinterest'
 require 'omniauth-facebook'
+require 'omniauth-google-oauth2'
 
 helpers do
 
@@ -26,7 +27,7 @@ use OmniAuth::Builder do
   provider :twitter, ENV['TWITTER_OMNIAUTH'], ENV['TWITTER_OMNIAUTH_SECRET']
   provider :pinterest, ENV['PINTEREST_OMNIAUTH'], ENV['PINTEREST_OMNIAUTH_SECRET']
   provider :facebook, ENV['FACEBOOK_OMNIAUTH'], ENV['FACEBOOK_OMNIAUTH_SECRET']
-  # provider :facebook, ENV['GOOGLE_OMNIAUTH'], ENV['GOOGLE_OMNIAUTH_SECRET']
+  provider :google_oauth2, ENV["GOOGLE_OMNIAUTH"], ENV["GOOGLE_OMNIAUTH_SECRET"]
 end
 
 # set :database, "sqlite3:sinatra_app_dev.sqlite3"
