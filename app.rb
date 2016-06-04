@@ -105,7 +105,7 @@ get '/users/new' do
 end
 
 post '/users' do
-    @user = User.new(email: params['email'].presence, password: params['password'].presence)
+    @user = User.new(name: params['name'].presence, email: params['email'].presence, password: params['password'].presence)
     if @user.save
       flash[:info] = "User sucessfully created"
       mail_options = {

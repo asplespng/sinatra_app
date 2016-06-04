@@ -13,6 +13,10 @@
           .col-md-3
             %input.btn.btn-block.btn-primary{:type => "submit", :value => "Sign in"}
           .col-md-3
+            %a.btn.btn-block.btn-default{href: "/users/new"} Sign Up
+        %hr
+        .row
+          .col-md-3
             %a.btn.btn-block.btn-social.btn-twitter{href: "/auth/twitter"}
               %span.fa.fa-twitter
               Sign in with Twitter
@@ -24,7 +28,6 @@
             %a.btn.btn-block.btn-social.btn-pinterest{href: "/auth/pinterest"}
               %span.fa.fa-pinterest
               Sign in with Pinterest
-        .row
           .col-md-3
             %a.btn.btn-block.btn-social.btn-google{href: "/auth/google_oauth2"}
               %span.fa.fa-google

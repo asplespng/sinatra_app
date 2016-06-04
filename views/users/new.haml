@@ -5,7 +5,7 @@
     %form{ action: "/users", method: "post"}
       %div{class: "form-group #{@user.errors[:name].any? && "has-error"}"}
         %label.control-label{for: "name"} Name:
-        %input{type: "text", name: "name", class: "form-control", placeholder:"Enter your name", value: @user.email}
+        %input{type: "text", name: "name", class: "form-control", placeholder:"Enter your name", value: @user.name}
         %span.help-block
           = @user.errors[:name].join(', ') if @user.errors.any?
       %div{class: "form-group #{@user.errors[:email].any? && "has-error"}"}
