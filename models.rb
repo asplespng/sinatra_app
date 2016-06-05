@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  require 'tilt/haml'
+
   before_create :generate_confirm_token, if: :has_credentials?
   has_secure_password(validations: false)
   validates :password, :email, presence: true, on: :create, unless: :has_omni_auth?
@@ -12,18 +14,22 @@ class User < ActiveRecord::Base
     end
     begin
       send_confirm_email
-    rescue
-      # raise ActiveRecord::RecordInvalid.new(self)
+    rescue => e
+      # todo log exception
+      errors.add(:email, "There was an error sending confirmation email. Please try again.")
+      raise ActiveRecord::RecordInvalid.new(self)
     end
   end
 
   def send_confirm_email
+    tmpl = Tilt.new("#{Sinatra::Application.views}/mailers/confirm_registration.haml")
+
     mail_options = {
         to: email,
         from: "a@example.com",
         subject: "Please confirm your registration",
         body: "successfully registered",
-        html_body: (haml :'mailers/confirm_registration', layout: false)
+        html_body: (tmpl.render(self))
     }
     Pony.mail(Sinatra::Application.settings.pony_defaults.merge mail_options)
   end

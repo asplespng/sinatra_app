@@ -108,16 +108,9 @@ post '/users' do
     @user = User.new(name: params['name'].presence, email: params['email'].presence, password: params['password'].presence)
     if @user.save
       flash[:info] = "User sucessfully created"
-      mail_options = {
-          to: @user.email,
-          from: "a@example.com",
-          subject: "Please confirm your registration",
-          body: "successfully registered",
-          html_body: (haml :'mailers/confirm_registration', layout: false)
-      }
-      Pony.mail(settings.pony_defaults.merge mail_options)
       redirect '/users'
     else
+      flash[:danger] = "There was a problem with your registration"
       haml :'users/new'
     end
 end
