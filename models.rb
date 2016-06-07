@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   require 'tilt/haml'
+  require_relative 'mailers/mailer'
 
   before_create :generate_confirm_token, if: :has_credentials?
   has_secure_password(validations: false)
@@ -22,16 +23,8 @@ class User < ActiveRecord::Base
   end
 
   def send_confirm_email
-    tmpl = Tilt.new("#{Sinatra::Application.views}/mailers/confirm_registration.haml")
-
-    mail_options = {
-        to: email,
-        from: "a@example.com",
-        subject: "Please confirm your registration",
-        body: "successfully registered",
-        html_body: (tmpl.render(self))
-    }
-    Pony.mail(Sinatra::Application.settings.pony_defaults.merge mail_options)
+    mailer = Mailer.new
+    mailer.confirmation_mailer(to: email, token: confirm_token)
   end
 
   def has_credentials?
