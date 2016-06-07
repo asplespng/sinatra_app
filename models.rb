@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   def send_confirm_email
     mailer = Mailer.new
-    mailer.confirmation_mailer(to: email, token: confirm_token)
+    mailer.confirmation_mailer(to: "#{name} <#{email}>", token: confirm_token)
   end
 
   def has_credentials?
