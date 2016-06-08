@@ -1,6 +1,8 @@
 %div{class: "form-group #{object.errors[field_name].any? && "has-error"}"}
   -field_type = defined?(as) && as.present? ? as : :text
-  %label.control-label{for: field_name}="#{field_name.capitalize}:"
-  %input{type: field_type, name: field_name, class: "form-control", placeholder:"Enter #{field_name}", value: object.send(field_name)}
+  -field_label = defined?(label) && label.present? ? label : field_name.to_s.humanize
+  -field_placeholder = defined?(placeholder) && placeholder.present? ? placeholder : "Enter #{field_name.to_s.humanize.downcase}"
+  %label.control-label{for: field_name}="#{field_label}:"
+  %input{type: field_type, name: field_name, class: "form-control", placeholder: field_placeholder, value: object.send(field_name)}
   %span.help-block
     = object.errors[field_name].join(', ') if object.errors.any?

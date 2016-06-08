@@ -3,7 +3,7 @@
     %h3.panel-title New User
   .panel-body
     %form{ action: "/users", method: "post"}
-      = input :name, object: @user
+      = input :name, object: @user, label: "Full name", placeholder: "Enter your full name"
       = input :email, object: @user, as: :email
       = input :password, object: @user, as: :password
       %input{type: "submit", value: "Create", class: "btn btn-primary"}
