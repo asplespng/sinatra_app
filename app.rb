@@ -8,6 +8,7 @@ require 'coffee-script'
 require './models'
 require 'sinatra/flash'
 require_relative 'lib/sinatra/authentication'
+require_relative 'lib/partials'
 require 'pony'
 require_relative 'config/environments'
 require 'omniauth'
@@ -110,7 +111,7 @@ post '/users' do
       flash[:info] = "User sucessfully created"
       redirect '/users'
     else
-      flash[:danger] = "There was a problem with your registration"
+      flash.now[:danger] = "There was a problem with your registration"
       haml :'users/new'
     end
 end
@@ -131,7 +132,9 @@ end
 
 put '/users/:id' do
   @user = User.find(params[:id])
-  @user.update!(email: params[:email])
+  values = {email: params[:email], name: params[:name]}
+  values.merge!(password: params[:password]) if params[:password].present?
+  @user.update!(values)
   flash[:info] = "User sucessfully updated"
   redirect '/users'
 end
