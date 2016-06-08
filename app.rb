@@ -214,7 +214,9 @@ post '/users/reset_password/:token' do
   @user = User.find_by(password_reset_token: params[:token])
   if @user.present?
     @user.password = params[:password]
-    if @user.save
+    if @user.valid?
+      @user.password_reset_token = nil
+      @user.save
       flash[:info] = "Password updated"
       redirect "/sessions/new?email=#{@user.email}"
     else

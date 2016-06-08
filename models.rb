@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
 
   before_create :generate_confirm_token, if: :has_credentials?
   has_secure_password(validations: false)
-  validates :password, :email, presence: true, unless: :has_omni_auth?
+  validates :password, :email, presence: true, if: :should_validate_password?
   validates :name, presence: true
-  validates :email, format: {with: /@/}
+  validates :email, presence: :true, format: {with: /@/}, unless: :has_omni_auth?
   validates :email, uniqueness: true, unless: :skip_email_uniqueness
 
   attr_accessor :skip_email_uniqueness
@@ -53,5 +53,9 @@ class User < ActiveRecord::Base
 
   def has_omni_auth?
     uid.present?
+  end
+
+  def should_validate_password?
+    return !has_omni_auth? && password_digest_changed?
   end
 end
