@@ -7,5 +7,5 @@
       %input{name: "_method", type: "hidden", value: "PUT"}
         = input :name, object: @user
         = input :email, object: @user, as: :email
-        = input :password, object: @user, as: :password
+        = input :password, object: @user, as: :password, label: "New password", placeholder: "Enter new password"
       %input{type: "submit", value: "Send", class: "btn btn-primary"}
