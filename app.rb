@@ -16,6 +16,8 @@ require 'omniauth-twitter'
 require 'omniauth-pinterest'
 require 'omniauth-facebook'
 require 'omniauth-google-oauth2'
+require 'will_paginate-bootstrap'
+require 'will_paginate/array'
 
 helpers do
 
@@ -96,7 +98,7 @@ helpers do
 end
 get '/users' do
   authenticate!
-  @users = User.all.order("LOWER(name)")
+  @users = User.all.order("LOWER(name)").paginate(:page => params[:page])
   haml :'users/index'
 end
 

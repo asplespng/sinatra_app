@@ -2,7 +2,7 @@
   .panel-heading
     %h3.panel-title Users
 
-  %table.table
+  %table.table.table-bordered
     %tr
       %th Name
       %th Email
@@ -17,5 +17,6 @@
             %a.btn.btn-primary{href: "/users/#{user.id}/edit"} Edit
             %a.btn.btn-danger{href: "/users/#{user.id}/delete"} Delete
 
-
-%a.btn.btn-primary{:href => '/users/new'} New User
+= will_paginate @users, renderer: BootstrapPagination::Sinatra
+.row
+  %a.btn.btn-primary{:href => '/users/new'} New User
