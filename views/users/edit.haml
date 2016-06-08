@@ -1,6 +1,7 @@
 .panel.panel-default
   .panel-heading
-    %h3.panel-title Edit User
+    .panel-title
+      .fa.fa-file-text-o.title-text= " Edit User"
   .panel-body
     %form{action: "/users/#{@user.id}", method: "post"}
       %input{name: "_method", type: "hidden", value: "PUT"}
