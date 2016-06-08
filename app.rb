@@ -96,7 +96,7 @@ helpers do
 end
 get '/users' do
   authenticate!
-  @users = User.all
+  @users = User.all.order("LOWER(name)")
   haml :'users/index'
 end
 
