@@ -174,8 +174,57 @@ end
 get '/users/:id/delete' do
   @user = User.find(params[:id])
   haml :'/users/delete'
+  end
+
+get '/users/reset_password' do
+  @user = User.new
+  haml :'/users/reset_password'
 end
 
+post '/users/reset_password' do
+  @user = User.new(email: params[:email], skip_email_uniqueness: true)
+  @user.validate
+  if @user.errors[:email].any?
+    flash.now[:danger] = "There was a problem"
+  else
+    @user = User.find_by_email(params[:email])
+    if @user.present?
+      if @user.send_password_reset_token
+        flash.now[:info] = "We have sent you an email with further instructions"
+      else
+        flash.now[:danger] = "There was a problem"
+      end
+    else
+      @user = User.new
+      flash.now[:danger] = "There was a problem"
+      @user.errors.add(:email, "A user with that email could not be found")
+    end
+  end
+  @user
+  haml :'/users/reset_password'
+end
+
+get '/users/reset_password/:token' do
+  @user = User.find_by(password_reset_token: params[:token])
+  flash.now[:danger] = "User not found" if @user.blank?
+  haml :'/users/new_password'
+end
+
+post '/users/reset_password/:token' do
+  @user = User.find_by(password_reset_token: params[:token])
+  if @user.present?
+    @user.password = params[:password]
+    if @user.save
+      flash[:info] = "Password updated"
+      redirect "/sessions/new?email=#{@user.email}"
+    else
+      flash.now[:danger] = "There was a problem"
+    end
+  else
+    flash.now[:danger] = "User not found"
+  end
+  haml :'/users/new_password'
+end
 
 delete '/users/:id' do
   @user = User.find(params[:id])
