@@ -8,7 +8,7 @@ require 'coffee-script'
 require './models'
 require 'sinatra/flash'
 require_relative 'lib/sinatra/authentication'
-require_relative 'lib/partials'
+# require_relative 'lib/partials'
 require 'pony'
 require_relative 'config/environments'
 require 'omniauth'
@@ -18,6 +18,7 @@ require 'omniauth-facebook'
 require 'omniauth-google-oauth2'
 require 'will_paginate-bootstrap'
 require 'will_paginate/array'
+require 'asples_sinatra'
 
 helpers do
 
